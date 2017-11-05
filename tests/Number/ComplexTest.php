@@ -404,13 +404,13 @@ class ComplexTest extends PHPUnit_Framework_TestCase
     public function testNegative()
     {
         $neg = new Complex(1, 2);
-        $this->assertInstanceOf(Complex::class, $neg->negative());
+        $this->assertInternalType('object', $neg->negative());
     }
 
     public function testSubstractShouldReturnAddMethodResult()
     {
         $subs = new Complex(1, 2);
-        $this->assertInstanceOf(Complex::class, $subs->substract(2));
+        $this->assertInternalType('object', $subs->substract(2));
     }
 
     public function testEqualArgumentZIsNumberic()
