@@ -395,6 +395,52 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($must, $real->divide($z));
     }
 
+    public function testGetShouldBeNull()
+    {
+        $z = new Complex(1, 2);
+        $this->assertNull($z->__get('no'));
+    }
+
+    public function testNegative()
+    {
+        $neg = new Complex(1, 2);
+        $this->assertInstanceOf(Complex::class, $neg->negative());
+    }
+
+    public function testSubstractShouldReturnAddMethodResult()
+    {
+        $subs = new Complex(1, 2);
+        $this->assertInstanceOf(Complex::class, $subs->substract(2));
+    }
+
+    public function testEqualArgumentZIsNumberic()
+    {
+        $equal = new Complex(2, 2);
+        $this->assertFalse($equal->equal(2));
+    }
+
+    public function testToStringShouldBeZero()
+    {
+        $z = new Complex(0, 0, Complex::TRIGONOMETRIC);
+        $this->assertSame(0, $z->__toString());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testComplexInstanceFloatAShouldBeInvalidNumber()
+    {
+        $z = new Complex(false, 2, null);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testComplexInstanceMixBShouldBeInvalid()
+    {
+        $z = new Complex(2, false, null);
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      */

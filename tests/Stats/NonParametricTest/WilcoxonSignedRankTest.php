@@ -434,6 +434,37 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
         $w->sample_b = array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135);
         $this->assertEquals(9, $w->w());
     }
-    
 
+    public function testGetShouldBeSignedRanks()
+    {
+        $w = new WilcoxonSignedRank();
+        $w->sample_a = array(110, 122, 125, 120, 140, 124, 123, 137, 135, 145);
+        $w->sample_b = array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135);
+        $w->__get('signed_ranks');
+        $this->assertEquals(9, $w->w());
+    }
+
+    public function testGetShouldBeNull()
+    {
+        $w = new WilcoxonSignedRank();
+        $this->assertNull($w->__get('no'));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSetValueIsInvalidValue()
+    {
+        $w = new WilcoxonSignedRank();
+        $w->__set('sample_one', 'no');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAdd()
+    {
+        $w = new WilcoxonSignedRank();
+        $w->add('no');
+    }
 }

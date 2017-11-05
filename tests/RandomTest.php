@@ -105,6 +105,22 @@ class RandomTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException OutOfRangeException
+     */
+    public function testRandomInstanceOutOfRangeException()
+    {
+        $r = new Random(0, mt_getrandmax() + 1);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testRandomInstanceInvalidArgumentException()
+    {
+        $r = new Random(0, 0.01);
+    }
+
+    /**
      * @expectedException InvalidArgumentException
      */
     public function testGettingManyItemsWithoutReplacementWhithArgLessThan2RaisesException()
@@ -113,5 +129,11 @@ class RandomTest extends PHPUnit_Framework_TestCase
         $r->getManyWithoutReplacement(1);
         $r = new Random();
         $r->getManyWithoutReplacement(1);
+    }
+
+    public function testToString()
+    {
+        $r = new Random(0, 9);
+        $this->assertInternalType('string', $r->__toString());
     }
 }

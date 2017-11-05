@@ -93,4 +93,10 @@ class AnovaTest extends PHPUnit_Framework_TestCase
         $this->assertEquals((float) 9.3, (float) round($a->f, 1));
         $this->assertEquals((float) 9.3, (float) round($a->f_ratio, 1));
     }
+
+    public function testGetShouldBeNull()
+    {
+        $a = new Anova();
+        $this->assertNull($a->__get('no'));
+    }
 }

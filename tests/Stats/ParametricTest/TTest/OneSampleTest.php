@@ -126,4 +126,31 @@ class OneSampleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(3.04, round($t->t(), 2));
         $this->assertEquals(3.04, round($t->t, 2));
     }
+
+    public function testGetShouldBeNull()
+    {
+        $t = new OneSample();
+        $this->assertNull($t->__get('no'));
+    }
+
+    public function testOneSampleInstanceWithMeanValue()
+    {
+        $t = new OneSample(4.7);
+        $t->set(
+            array(
+                5, 5.5, 4.5, 5, 5, 6, 5, 5, 4.5, 5, 5, 4.5, 4.5, 5.5, 4, 5, 5, 5.5, 4.5, 5.5, 5, 5.5
+            )
+            );
+        $this->assertEquals(3.04, round($t->t(), 2));
+        $this->assertEquals(3.04, round($t->t, 2));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetWithTheArgumentIsNotStatsInstance()
+    {
+        $t = new OneSample(4.7);
+        $t->set('no');
+    }
 }

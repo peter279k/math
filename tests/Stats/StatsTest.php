@@ -513,7 +513,6 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $s->percentile(-6);
     }
 
-
     /**
      * @expectedException \OutOfRangeException
      */
@@ -630,5 +629,188 @@ class StatsTest extends PHPUnit_Framework_TestCase
     public function testGettingPPMCCShouldSuccess()
     {
         $this->markTestIncomplete();
+    }
+
+    public function testGetWithNameIsMidRange()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(4, $s->__get('midrange'));
+    }
+
+    public function testGetWithNameIsPlatykurtic()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(4, $s->__get('is_platykurtic'));
+    }
+
+    public function testGetWithNameIsLeptokurtic()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertFalse($s->__get('is_leptokurtic'));
+    }
+
+    public function testGetWithNameIsMesokurtic()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertFalse($s->__get('is_mesokurtic'));
+    }
+
+    public function testGetWithNameIsIndexOfDispersion()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(1, $s->__get('coefficient_of_dispersion'));
+    }
+
+    public function testGetWithNameIsPearsonsR()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(1, $s->__get('pearsons_rho'));
+    }
+
+    public function testGetWithNameIsNull()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertNull($s->__get('no'));
+    }
+
+    public function testMinShouldGetTheMinValue()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(1, $s->min());
+    }
+
+    public function testMaxShouldGetTheMaxValue()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(7, $s->max());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testAddShouldNotBeTheNumbericParameter()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $s->add('no');
+    }
+
+    public function testGeneralizedMeanShouldReturnPowResult()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(4, $s->generalizedMean(1));
+    }
+
+    public function testPowerMeanShouldReturnGeneralizedMean()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(4, $s->powerMean(1));
+    }
+
+    public function testLehmerShoudReturnLehmerMean()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(4, $s->lehmer(1));
+    }
+
+    public function testContraharmonicShoudReturnLehmerMean()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(5, $s->contraharmonic());
+    }
+
+    public function testMidextremeShouldReturnMidRange()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(4, $s->midextreme()); 
+    }
+
+    public function testPopulationVarianceShouldReturnVariance()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(4, $s->populationVariance()); 
+    }
+
+    public function testPopulationCovarianceShouldReturnCovariance()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(4, $s->populationCovariance(array(1,2,3,4,5,6,7))); 
+    }
+
+    public function testStddevShouldReturnStandardDeviation()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(2, $s->stddev());
+    }
+
+    public function testStdevShouldReturnStandardDeviation()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(2, $s->stdev());
+    }
+
+    public function testSigmaShouldReturnStandardDeviation()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(2, $s->sigma());
+    }
+
+    public function testS2ShouldReturnSampleDeviation()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertGreaterThanOrEqual(4, $s->s2());
+    }
+
+    public function testPercentileWithNIs50Percent()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertGreaterThanOrEqual(4, $s->percentile(50));
+
+        $s = new Stats(array(1,2,3,4,5,6));
+        $this->assertGreaterThanOrEqual(3, $s->percentile(50));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testPearsonsR()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $s->pearsonsR('no');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCovarianceDataWithNoArray()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $s->covariance('no'); 
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testModeShouldBeNull()
+    {
+        $s = new Stats(array(1,1.1,1.2));
+        $s->mode();
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testGetWithIndexMustBeInteger()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $s->get('no');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testGetWithIndexMustBeNullOrPositiveInteger()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $s->get(-1);
     }
 }

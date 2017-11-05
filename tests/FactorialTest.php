@@ -55,4 +55,17 @@ class FactorialTest extends PHPUnit_Framework_TestCase
         $f = new Factorial(5);
         $this->assertEquals(120, $f->result);
     }
+
+    public function testGetShouldBeNull()
+    {
+        $f = new Factorial(2);
+        $this->assertNull($f->__get(null));
+    }
+
+    public function testToString()
+    {
+        $f = new Factorial(2);
+        $this->assertInternalType('string', $f->__toString());
+        $this->assertSame('2', $f->__toString());
+    }
 }

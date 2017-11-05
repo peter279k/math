@@ -86,6 +86,55 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testGetTheCorrectName()
+    {
+        $r = new RandomComplex();
+        $this->assertEquals('r', $r->__get('r'));
+        $this->assertNull($r->__get('no'));
+    }
+
+    public function testGetTheIComplexInstance()
+    {
+        $i = new RandomComplex();
+        $i->i(-3.8, -3.2);
+        $arr = $i->getMany(100);
+
+        foreach ($arr as $z) {
+            $this->assertGreaterThanOrEqual(-3.8, $z->i);
+            $this->assertLessThanOrEqual(-3.2, $z->i);
+        }
+    }
+
+    public function testGetTheRhoComplexInstance()
+    {
+        $rho = new RandomComplex();
+        $rho->rho(3, 4);
+        $arr = $rho->getMany(100);
+
+        foreach ($arr as $z) {
+            $this->assertGreaterThanOrEqual(3, $z->rho);
+            $this->assertLessThanOrEqual(4, $z->rho);
+        }
+    }
+
+    public function testGetTheThetaComplexInstance()
+    {
+        $theta = new RandomComplex();
+        $theta->theta(-3.8, -3.2);
+        $arr = $theta->getMany(100);
+
+        foreach ($arr as $z) {
+            $this->assertGreaterThanOrEqual(-3.8, $z->theta);
+            $this->assertLessThanOrEqual(-3.2, $z->theta);
+        }
+    }
+
+    public function testGetShouldBeNull()
+    {
+        $null = new RandomComplex();
+        $this->assertNull($null->get());
+    }
+
     /**
      * @expectedException InvalidArgumentException
      */
@@ -201,6 +250,24 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
     {
         $r = new RandomComplex();
         $r->theta(1.2, 3.4)->i(5.6, 7.8);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testGetManyWithInvalidNumber()
+    {
+        $r = new RandomComplex();
+        $r->getMany(1);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testCheckOrderWithInvalidNumber()
+    {
+        $r = new RandomComplex();
+        $r->r(false, false);
     }
 
     public function testStartingWithAlgebraicThenResetThenUseTrigonometricWithoutException()

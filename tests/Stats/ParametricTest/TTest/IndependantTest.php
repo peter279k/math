@@ -117,4 +117,37 @@ class IndependantTTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(60, $t->degreeOfFreedom());
         $this->assertEquals(60, $t->dof());
     }
+
+    public function testSetWithTheSampleOne()
+    {
+        $t = new Independant();
+        $t->__set('sample_1', array(1,2,3));
+        $t->add(array(102, 97, 104, 91, 104, 108, 93, 94, 101, 100, 89, 108, 110, 96, 99, 98, 101, 88, 104, 98, 107, 102, 104, 90, 116, 95, 99, 102, 104, 93, 100, 87));
+        $this->assertEquals(33, $t->degreeOfFreedom());
+        $this->assertEquals(33, $t->dof());
+    }
+
+    public function testSetWithTheSampleTwo()
+    {
+        $t = new Independant();
+        $this->assertNull($t->__set('sample_2', array(1,2,3)));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testAddWithArgumentIsNoStatsInstance()
+    {
+        $t = new Independant();
+        $t->add('no');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetWithArgumentIsNoStatsInstance()
+    {
+        $t = new Independant();
+        $t->__set('sample_1', 'no');
+    }
 }

@@ -96,7 +96,23 @@ class WilcoxonMannWhitney implements \Countable
 
     public function clear()
     {
-        //TODO
+        $this->int_count = null;
+        $this->arr_ranks = array();
+        $this->arr_rank_values = array();
+        $this->arr_rank_sums = array();
+        $this->arr_rank_means = array();
+        $this->arr_rank_sigmas = array();
+        $this->u1 = null;
+        $this->u2 = null;
+        $this->u = null;
+        $this->sigma = null;
+        $this->sigma_corrected = null;
+        $this->sigma2 = null;
+        $this->sigma2_corrected = null;
+        $this->mean = null;
+        $this->z = null;
+        $this->z_corrected = null;
+    
     }
 
 

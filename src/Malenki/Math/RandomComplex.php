@@ -157,7 +157,7 @@ class RandomComplex
     public function __get($name)
     {
         if (in_array($name, array('rho', 'theta', 'r', 'i'))) {
-            return $this->$name;
+            return $name;
         }
     }
 

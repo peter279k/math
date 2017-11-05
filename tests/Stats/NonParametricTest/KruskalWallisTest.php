@@ -154,4 +154,10 @@ class KruskalWallisTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(15.98, round($k->h(), 2));
         $this->assertEquals(15.98, round($k->h, 2));
     }
+
+    public function testGetShouldBeNull()
+    {
+        $k = new KruskalWallis();
+        $this->assertNull($k->__get('no'));
+    }
 }

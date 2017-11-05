@@ -196,4 +196,67 @@ class WilcoxonMannWhitneyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(-2.1602, round($w->z(), 4));
         $this->assertEquals(-2.1602, round($w->z, 4));
     }
+
+    public function testGetShouldBeNull()
+    {
+        $w = new WilcoxonMannWhitney();
+        $this->assertNull($w->__get('no'));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAddShouldBeStatInstance()
+    {
+        $w = new WilcoxonMannWhitney();
+        $w->add('no');
+    }
+
+    public function testSigmaWithSampleIsNotNull()
+    {
+        $w = new WilcoxonMannWhitney();
+        $w->add(array(135, 139, 142, 144, 158, 165, 171, 178, 244, 245, 256, 267, 268, 289));
+        $w->add(array(131, 138, 138, 141, 142, 142, 143, 145, 156, 167, 191, 230));
+        $this->assertEquals(378, $w->sigma(2));
+    }
+
+    public function testCorrection()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testZCorrected()
+    {
+        $w = new WilcoxonMannWhitney();
+        $w->add(array(135, 139, 142, 144, 158, 165, 171, 178, 244, 245, 256, 267, 268, 289));
+        $w->add(array(131, 138, 138, 141, 142, 142, 143, 145, 156, 167, 191, 230));
+        $this->assertNull($w->z_corrected());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSumWithSampleIsNotInArray()
+    {
+        $w = new WilcoxonMannWhitney();
+        $w->sum(3);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSigmaWithSampleIsNotInArray()
+    {
+        $w = new WilcoxonMannWhitney();
+        $w->sigma(3);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testMeanWithSampleIsNotInArray()
+    {
+        $w = new WilcoxonMannWhitney();
+        $w->mean(3);
+    }
 }

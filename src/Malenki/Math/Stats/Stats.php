@@ -244,7 +244,7 @@ class Stats implements \Countable
             )
         )
         {
-            return $this->pearsonsR();
+            return $this->pearsonsR($this->arr);
         }
 
     }
@@ -401,7 +401,7 @@ class Stats implements \Countable
     /**
      * @todo Implement mode for continuous distribution, see http://en.wikipedia.org/wiki/Mode_(statistics)#Mode_of_a_sample
      */
-    public function mode($inteval = null)
+    public function mode($interval = null)
     {
         if (is_null($this->arr_mode)) {
             if ($this->allInteger()) {
@@ -587,7 +587,7 @@ class Stats implements \Countable
 
     public function lehmer($p)
     {
-        return $this->lehmerMean();
+        return $this->lehmerMean($p);
     }
 
     public function contraharmonicMean()

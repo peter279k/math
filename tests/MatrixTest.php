@@ -274,6 +274,14 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(621, $m->det);
     }
 
+    public function testComputeDetOfSquareMatrix()
+    {
+        $m = new Matrix(2, 2);
+        $m->populate(array(1, 2, 3, 4));
+
+        $this->assertEquals(-2, $m->determinant());
+    }
+
     /**
      * @expectedException RuntimeException
      */
@@ -374,9 +382,136 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $m->trace();
     }
 
-
     public function testGettigExponentialMatrixShouldSuccess()
     {
         $this->markTestIncomplete();
+    }
+
+    public function testGetShouldBeNull()
+    {
+        $m = new Matrix(2, 3);
+        $this->assertNull($m->__get(null));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMatrixIsNotIntegers()
+    {
+        $m = new Matrix(true, false);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMatrixIsNegativeIntegers()
+    {
+        $m = new Matrix(-2, -3);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testGetIsNotIntegers()
+    {
+        $m = new Matrix(2, 3);
+        $m->get(0.1, 0.01);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testGetMatrixRowColumnIsNegativeIntegers()
+    {
+        $m = new Matrix(2, 3);
+        $m->get(-1, -2);
+    }
+
+    /**
+     * @expectedException \OutOfRangeException
+     */
+    public function testAddRowShouldBeOutOfRange()
+    {
+        $m = new Matrix(2, 3);
+        $m->addRow([2, 3, 4]);
+        $m->addRow([2, 3, 4]);
+        $m->addRow([2, 3, 4]);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testAddRowShouldBeTheSameAmountColumn()
+    {
+        $m = new Matrix(2, 3);
+        $m->addRow([2, 3]);
+    }
+
+    /**
+     * @expectedException \OutOfRangeException
+     */
+    public function testAddColShouldBeOutOfRange()
+    {
+        $m = new Matrix(2, 2);
+        $m->addCol([2, 3]);
+        $m->addCol([2, 3]);
+        $m->addCol([2, 3]);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testAddColShouldBeTheSameAmountColumn()
+    {
+        $m = new Matrix(2, 3);
+        $m->addCol([2, 3, 4]);
+    }
+
+    /**
+     * @expectedException \OutOfRangeException
+     */
+    public function testGetRowShouldBeOutOfRange()
+    {
+        $m = new Matrix(2, 3);
+        $m->getRow(0);
+    }
+
+    /**
+     * @expectedException \OutOfRangeException
+     */
+    public function testGetColShouldBeOutOfRange()
+    {
+        $m = new Matrix(2, 3);
+        $m->getCol(4);
+    }
+
+    public function testMultiplyAllowShouldBeFalse()
+    {
+        $m = new Matrix(2, 3);
+        $this->assertFalse($m->multiplyAllow(false));
+    }
+
+    public function testMultiplyAllowShouldBeInstanceOfComplex()
+    {
+        $m = new Matrix(2, 3);
+        $this->assertTrue($m->multiplyAllow(new Complex(1, 2)));
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testMultiplyShouldBeTheWrongNumberOfRows()
+    {
+        $m = new Matrix(2, 3);
+        $m->multiply(false);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testAddShouldNotBeInstanceOfMatrix()
+    {
+        $m = new Matrix(2, 3);
+        $m->add(false);
     }
 }

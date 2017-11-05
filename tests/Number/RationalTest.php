@@ -55,4 +55,26 @@ class RationalTest extends PHPUnit_Framework_TestCase
         $r = new Rational(2, 3);
         $this->assertEquals('2/3', "$r");
     }
+
+    public function testGetShouldBeNull()
+    {
+        $r = new Rational(2, 3);
+        $this->assertNull($r->__get('no'));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testRationalInstanceIsInvalidIntegers()
+    {
+        $r = new Rational(0.1, 0.01);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testRationalInstanceArgumentDenominatorIsZero()
+    {
+        $r = new Rational(1, 0);
+    }
 }

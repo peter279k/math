@@ -265,4 +265,40 @@ class AngleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $a->turn);
         $this->assertEquals(800, $a->gon);
     }
+
+    public function testGetShouldBeType()
+    {
+        $a = new Angle(4 * pi(), Angle::TYPE_RAD);
+        $this->assertEquals('rad', $a->__get('type'));
+    }
+
+    public function testGetShouldBeNull()
+    {
+        $a = new Angle(4 * pi(), Angle::TYPE_RAD);
+        $this->assertNull($a->__get(''));
+    }
+
+    public function testAngleInstanceAngleTypeIsGon()
+    {
+        $a = new Angle(4 * pi(), Angle::TYPE_GON);
+        $this->assertGreaterThanOrEqual(11, $a->deg);
+        $this->assertGreaterThanOrEqual(0, $a->rad);
+        $this->assertGreaterThanOrEqual(0, $a->turn);
+        $this->assertGreaterThanOrEqual(12, $a->gon);
+    }
+
+    public function testAngleInstanceAngleTypeIsTurn()
+    {
+        $a = new Angle(4 * pi(), Angle::TYPE_TURN);
+        $this->assertGreaterThanOrEqual(11, $a->deg);
+        $this->assertGreaterThanOrEqual(0, $a->rad);
+        $this->assertGreaterThanOrEqual(0, $a->turn);
+        $this->assertGreaterThanOrEqual(12, $a->gon);
+    }
+
+    public function testGetTheOriginalAngleValue()
+    {
+        $a = new Angle(4 * pi(), Angle::TYPE_TURN);
+        $this->assertEquals(4 * pi(), $a->get());
+    }
 }

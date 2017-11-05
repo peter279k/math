@@ -202,4 +202,18 @@ class DependantTTest extends PHPUnit_Framework_TestCase
         $this->assertCount(15, $t);
     }
 
+    public function testGetShouldBeNull()
+    {
+        $t = new Dependant();
+        $this->assertNull($t->__get('no'));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testAddWithArgumentIsNoStatsInstance()
+    {
+        $t = new Dependant();
+        $t->add('no');
+    }
 }
