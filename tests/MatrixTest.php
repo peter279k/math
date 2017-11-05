@@ -444,7 +444,7 @@ class MatrixTest extends PHPUnit_Framework_TestCase
     public function testAddRowShouldBeTheSameAmountColumn()
     {
         $m = new Matrix(2, 3);
-        $m->addRow([2, 3]);
+        $m->addRow(array(2, 3));
     }
 
     /**
@@ -453,9 +453,9 @@ class MatrixTest extends PHPUnit_Framework_TestCase
     public function testAddColShouldBeOutOfRange()
     {
         $m = new Matrix(2, 2);
-        $m->addCol([2, 3]);
-        $m->addCol([2, 3]);
-        $m->addCol([2, 3]);
+        $m->addCol(array(2, 3));
+        $m->addCol(array(2, 3));
+        $m->addCol(array(2, 3));
     }
 
     /**
@@ -464,7 +464,7 @@ class MatrixTest extends PHPUnit_Framework_TestCase
     public function testAddColShouldBeTheSameAmountColumn()
     {
         $m = new Matrix(2, 3);
-        $m->addCol([2, 3, 4]);
+        $m->addCol(array(2, 3, 4));
     }
 
     /**
