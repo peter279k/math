@@ -433,9 +433,9 @@ class MatrixTest extends PHPUnit_Framework_TestCase
     public function testAddRowShouldBeOutOfRange()
     {
         $m = new Matrix(2, 3);
-        $m->addRow([2, 3, 4]);
-        $m->addRow([2, 3, 4]);
-        $m->addRow([2, 3, 4]);
+        $m->addRow(array(2, 3, 4));
+        $m->addRow(array(2, 3, 4));
+        $m->addRow(array(2, 3, 4));
     }
 
     /**
